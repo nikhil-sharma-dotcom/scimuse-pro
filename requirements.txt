@@ -1,0 +1,8 @@
+streamlit
+numpy
+faiss-cpu
+pypdf
+networkx
+matplotlib
+langchain_google_genai
+python-dotenv
