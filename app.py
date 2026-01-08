@@ -26,9 +26,6 @@ from langchain_google_genai import (
 from langgraph.graph import StateGraph, END
 
 
-# =========================================================
-# 1. CONFIGURATION
-# =========================================================
 load_dotenv()
 st.set_page_config(page_title="SciMuse Pro: Autonomous Lab", layout="wide")
 st.sidebar.title("API Configuration")
@@ -54,9 +51,6 @@ emb_model = GoogleGenerativeAIEmbeddings(
 )
 
 
-# =========================================================
-# 2. STATE DEFINITION
-# =========================================================
 
 class ResearchState(TypedDict):
     topic: str
@@ -81,9 +75,6 @@ class ResearchState(TypedDict):
 
 
 
-# =========================================================
-# 3. DOCUMENT INGESTION + VECTOR STORE (CACHED)
-# =========================================================
 
 def extract_text_from_files(files):
     texts = []
@@ -376,9 +367,6 @@ Citations:
     return {"novelty_delta": res.content}
 
 
-# =========================================================
-# 5. LANGGRAPH
-# =========================================================
 
 def router(state):
     if state["is_novel"] or state["iteration_count"] >= 3:
@@ -418,9 +406,7 @@ builder.add_edge("novelty_delta", END)
 agent = builder.compile()
 
 
-# =========================================================
-# 6. KG + REPORT UTILITIES
-# =========================================================
+
 
 def build_knowledge_graph(text):
     prompt = f"""
@@ -479,9 +465,7 @@ def generate_markdown_report(state: ResearchState):
 """ + "\n".join(f"- {c}" for c in state["citations"])
 
 
-# =========================================================
-# 7. STREAMLIT UI
-# =========================================================
+
 
 st.title("🔬 SciMuse Pro")
 
